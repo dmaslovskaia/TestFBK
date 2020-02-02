@@ -1,0 +1,31 @@
+version: '3'
+services:
+  app:
+    container_name: app_fbk
+    build: .
+    image: app_fbk:0.0.1
+    hostname: app_fbk
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - front
+      - back
+
+  db:
+    container_name: db_fbk
+    image: postgres
+    hostname: db_fbk
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=testFBK
+      - POSTGRES_USER=testFBK
+      - POSTGRES_DB=testFBK
+    networks:
+      - back
+  
+networks:
+  front:
+  back:
