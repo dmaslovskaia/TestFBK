@@ -18,6 +18,7 @@ def init_db():
     db.session.add(Region(region_code=4, region_name="Altaj Republic"))
     db.session.add(Region(region_code=5, region_name="Dagestan Republic"))
     db.session.add(Region(region_code=8, region_name="Kalmykiya Republic"))
+    db.session.add(Region(region_code=99, region_name="Unknown region"))
     db.session.commit()
 
 if __name__ == "__main__":

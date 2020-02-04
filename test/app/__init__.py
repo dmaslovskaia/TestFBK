@@ -39,7 +39,7 @@ class Citizen(db.Model):
 class Quote(Resource):
   # Returns citizens in region
   # example: curl http://127.0.0.1:5000/region/8
-  def get(self, region_code = 1):
+  def get(self, region_code = 99):
     try:
       print("Execute GET transaction")
       result = db.session.query(Region.region_name, Citizen.citizen_name, Citizen.citizen_lastname, Citizen.citizen_age, Citizen.citizen_email).filter(Region.region_code == Citizen.region_code).filter(Region.region_code == region_code).all()
@@ -50,8 +50,8 @@ class Quote(Resource):
       db.session.close()
 
   # Add new citizen to region
-  # example: curl -X POST http://127.0.0.1:5000/region/8?"name"="Fedor"&"lastname"="Sumkin"&"age"=37&"email"="test@mail.com"
-  def post(self, region_code = 1):
+  # example: curl -X POST http://127.0.0.1:5000/region/?"name"="Fedor"&"lastname"="Sumkin"&"age"=37&"email"="test@mail.com"
+  def post(self, region_code = 99):
     try:
       parser = reqparse.RequestParser()
       parser.add_argument("name")

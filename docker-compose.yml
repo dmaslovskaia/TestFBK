@@ -3,7 +3,6 @@ services:
   proxy:
     container_name: nginx_fbk
     build: ./nginx
-    image: nginx_fbk
     hostname: testFBK
     ports:
       - 8080:80
@@ -15,11 +14,8 @@ services:
   app:
     container_name: app_fbk
     build: .
-    image: app_fbk:0.1.11
     command: gunicorn --bind 0.0.0.0:5000 manage:app
     hostname: app_fbk
-    ports:
-      - "5000:5000"
     depends_on:
       - db
     env_file:
@@ -32,8 +28,6 @@ services:
     container_name: db_fbk
     image: postgres:12.0-alpine
     hostname: db_fbk
-    ports:
-      - "5432:5432"
     env_file:
       - .env.db
     volumes:

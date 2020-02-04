@@ -14,20 +14,20 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /opt/app/wheels -r requiremen
 
 FROM python:3.8.0-alpine
 
-WORKDIR /opt/project
+WORKDIR /opt/test_fbk
 
 # Create special app user
-RUN addgroup -S app && adduser -h /opt/project -D -S -G app app
+RUN addgroup -S app && adduser -h /opt/test_fbk -D -S -G app app
 
-COPY ./project /opt/project
+COPY ./test /opt/test_fbk
 
 # Install app dependencies
-COPY --from=builder /opt/app/wheels ./project/wheels
+COPY --from=builder /opt/app/wheels ./test_fbk/wheels
 RUN apk update && apk add libpq
-RUN pip install --upgrade pip && pip install --no-cache ./project/wheels/*
+RUN pip install --upgrade pip && pip install --no-cache ./test_fbk/wheels/*
 
-RUN chown -R app:app /opt/project
+RUN chown -R app:app /opt/test_fbk
 
 USER app
 
-ENTRYPOINT ["/opt/project/entrypoint.sh"]
+ENTRYPOINT ["/opt/test_fbk/entrypoint.sh"]
